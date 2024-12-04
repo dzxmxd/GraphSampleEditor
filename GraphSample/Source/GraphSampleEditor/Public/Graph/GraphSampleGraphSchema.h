@@ -36,4 +36,5 @@ public:
 	static TArray<TSharedPtr<FString>> GetGraphSampleNodeCategories();
 	static void GetPaletteActions(FGraphActionMenuBuilder& ActionMenuBuilder, const FString& CategoryName);
 	static void GetGraphSampleNodeActions(FGraphActionMenuBuilder& ActionMenuBuilder, const FString& CategoryName);
+	static UClass* GetMappingGraphNodeClass(const UClass* GraphSampleNodeClass);
 };

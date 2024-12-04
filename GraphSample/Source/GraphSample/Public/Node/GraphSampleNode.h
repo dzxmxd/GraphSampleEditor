@@ -21,7 +21,7 @@ class GRAPHSAMPLE_API UGraphSampleNode : public UObject
 	GENERATED_BODY()
 
 public:
-	/** For example, the organization of runtime data depends on the specific logic */
+	/** For example, the organization of runtime data depends on the specific logic, officially remove VisibleAnywhere */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TArray<UGraphSampleNode*> Children;
 
@@ -30,7 +30,7 @@ public:
 	virtual FString GetNodeCategory() const;
 	virtual FText GetNodeTitle() const;
 	virtual FText GetNodeToolTip() const;
-	EGraphSampleNodeState GetActivationState() const;
+	virtual EGraphSampleNodeState GetActivationState() const;
 #endif
 
 #if WITH_EDITORONLY_DATA

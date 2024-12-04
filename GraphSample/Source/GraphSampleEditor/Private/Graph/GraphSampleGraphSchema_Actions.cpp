@@ -6,6 +6,7 @@
 #include "GraphSampleEditorHelper.h"
 #include "EdGraphNode_Comment.h"
 #include "Graph/GraphSampleGraph.h"
+#include "Graph/GraphSampleGraphSchema.h"
 #include "Graph/Widgets/SGraphSampleGraphEditor.h"
 
 #define LOCTEXT_NAMESPACE "GraphSampleGraphSchema_Actions"
@@ -45,8 +46,8 @@ UGraphSampleGraphNode* FGraphSampleGraphSchemaAction_NewNode::CreateNode(UEdGrap
 	GraphSampleAsset->Modify();
 
 	// create new Graph node
-	// If there are multiple graph nodes, need to be processed input uclass here
-	UGraphSampleGraphNode* NewGraphNode = NewObject<UGraphSampleGraphNode>(ParentGraph, UGraphSampleGraphNode::StaticClass(), NAME_None, RF_Transactional);
+	const UClass* GraphNodeClass = UGraphSampleGraphSchema::GetMappingGraphNodeClass(NodeClass);
+	UGraphSampleGraphNode* NewGraphNode = NewObject<UGraphSampleGraphNode>(ParentGraph, GraphNodeClass, NAME_None, RF_Transactional);
 	UGraphSampleNode* NewGraphSampleNode = NewObject<UGraphSampleNode>(GraphSampleAsset, NodeClass, NAME_None, RF_Transactional);
 	NewGraphNode->SetGraphSampleNode(NewGraphSampleNode);
 

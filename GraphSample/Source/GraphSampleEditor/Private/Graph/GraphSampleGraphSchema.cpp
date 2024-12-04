@@ -6,7 +6,9 @@
 #include "GraphSampleEditorHelper.h"
 #include "Graph/GraphSampleGraph.h"
 #include "Graph/GraphSampleGraphSchema_Actions.h"
+#include "Graph/Node/GraphSampleGraphNode_Reroute.h"
 #include "Graph/Widgets/SGraphSampleGraphEditor.h"
+#include "Node/GraphSampleNode_Reroute.h"
 
 #define LOCTEXT_NAMESPACE "GraphSampleGraphSchema"
 
@@ -135,7 +137,22 @@ TSharedPtr<FEdGraphSchemaAction> UGraphSampleGraphSchema::GetCreateCommentAction
 
 void UGraphSampleGraphSchema::OnPinConnectionDoubleCicked(UEdGraphPin* PinA, UEdGraphPin* PinB, const FVector2D& GraphPosition) const
 {
-	// TODO(wxd) reroute node here
+	const FScopedTransaction Transaction(LOCTEXT("CreateGraphSampleRerouteNodeOnWire", "Create GraphSample Reroute Node"));
+
+	const FVector2D NodeSpacerSize(42.0f, 24.0f);
+	const FVector2D KnotTopLeft = GraphPosition - (NodeSpacerSize * 0.5f);
+
+	UEdGraph* ParentGraph = PinA->GetOwningNode()->GetGraph();
+
+	if (const UGraphSampleGraphNode* NewGraphNode =
+		FGraphSampleGraphSchemaAction_NewNode::CreateNode(ParentGraph, nullptr, UGraphSampleNode_Reroute::StaticClass(), KnotTopLeft, false))
+	{
+		if (const UGraphSampleGraphNode_Reroute* NewRerouteGraphNode = Cast<UGraphSampleGraphNode_Reroute>(NewGraphNode))
+		{
+			TryCreateConnection(PinA, (PinA->Direction == EGPD_Output) ? NewRerouteGraphNode->GetInputPin() : NewRerouteGraphNode->GetOutputPin());
+			TryCreateConnection(PinB, (PinB->Direction == EGPD_Output) ? NewRerouteGraphNode->GetInputPin() : NewRerouteGraphNode->GetOutputPin());
+		}
+	}
 }
 
 void UGraphSampleGraphSchema::GetCommentAction(FGraphActionMenuBuilder& ActionMenuBuilder, const UEdGraph* CurrentGraph)
@@ -209,4 +226,14 @@ void UGraphSampleGraphSchema::GetGraphSampleNodeActions(FGraphActionMenuBuilder&
 
 	// Maybe need add BP extension categories here
 }
-#undef LOCTEXT_NAMESPACE /*"GraphSampleGraphSchema"*/
+
+UClass* UGraphSampleGraphSchema::GetMappingGraphNodeClass(const UClass* GraphSampleNodeClass)
+{
+	// You can also use TMap to map GraphNodeClass and NodeClass associations
+	if (GraphSampleNodeClass == UGraphSampleNode_Reroute::StaticClass())
+	{
+		return UGraphSampleGraphNode_Reroute::StaticClass();
+	}
+	return UGraphSampleGraphNode::StaticClass();
+}
+#undef LOCTEXT_NAMESPACE // "GraphSampleGraphSchema"
