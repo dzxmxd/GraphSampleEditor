@@ -1,0 +1,28 @@
+﻿{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "GraphSample",
+	"Description": "A simple example of a graph asset editor.",
+	"Category": "Other",
+	"CreatedBy": "",
+	"CreatedByURL": "https://github.com/dzxmxd/GraphSampleEditor",
+	"DocsURL": "https://github.com/dzxmxd/GraphSampleEditor",
+	"MarketplaceURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "GraphSample",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		},
+		{
+			"Name": "GraphSampleEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
