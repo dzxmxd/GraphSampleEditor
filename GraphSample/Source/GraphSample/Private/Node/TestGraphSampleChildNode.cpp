@@ -2,6 +2,7 @@
 
 #include "Node/TestGraphSampleChildNode.h"
 
+#if WITH_EDITOR
 FString UTestGraphSampleChildNode::GetNodeCategory() const
 {
 	return TEXT("ChildNodeCategory");
@@ -16,3 +17,4 @@ FText UTestGraphSampleChildNode::GetNodeToolTip() const
 {
 	return FText::FromString(TEXT("ChildNodeToolTip"));
 }
+#endif

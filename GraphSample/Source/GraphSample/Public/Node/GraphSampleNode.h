@@ -5,15 +5,13 @@
 #include "CoreMinimal.h"
 #include "GraphSampleNode.generated.h"
 
-#if WITH_EDITOR
-UENUM(BlueprintType)
+UENUM()
 enum EGraphSampleNodeState : uint8
 {
 	Default = 0,
 	Completed,
 	Failed
 };
-#endif
 
 UCLASS(Blueprintable)
 class GRAPHSAMPLE_API UGraphSampleNode : public UObject
