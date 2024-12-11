@@ -134,7 +134,12 @@ void SGraphSampleGraphEditor::SelectSingleNode(UEdGraphNode* Node)
 
 void SGraphSampleGraphEditor::OnSelectedNodesChanged(const TSet<UObject*>& Nodes)
 {
-	const TArray<UObject*> SelectedObjects = Nodes.Array();
+	TArray<UObject*> SelectedObjects = Nodes.Array();
+
+	if (Nodes.IsEmpty())
+	{
+		SelectedObjects.Add(GraphSampleAsset.Get());
+	}
 
 	if (DetailsView.IsValid())
 	{
