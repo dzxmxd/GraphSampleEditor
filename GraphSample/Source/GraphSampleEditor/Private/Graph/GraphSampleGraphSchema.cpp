@@ -159,7 +159,8 @@ void UGraphSampleGraphSchema::GetCommentAction(FGraphActionMenuBuilder& ActionMe
 {
 	if (!ActionMenuBuilder.FromPin)
 	{
-		const FText MenuDescription = LOCTEXT("AddCommentAction", "Add Comment...");
+		const bool bIsManyNodesSelected = CurrentGraph ? (FGraphSampleEditorHelper::GetGraphSampleGraphEditor(CurrentGraph)->GetNumberOfSelectedNodes() > 0) : false;
+		const FText MenuDescription = bIsManyNodesSelected ? LOCTEXT("CreateCommentAction", "Create Comment from Selection") : LOCTEXT("AddCommentAction", "Add Comment...");
 		const FText ToolTip = LOCTEXT("CreateCommentToolTip", "Creates a comment.");
 
 		const TSharedPtr<FGraphSampleGraphSchemaAction_NewComment> NewAction(new FGraphSampleGraphSchemaAction_NewComment(FText::GetEmpty(), MenuDescription, ToolTip, 0));
