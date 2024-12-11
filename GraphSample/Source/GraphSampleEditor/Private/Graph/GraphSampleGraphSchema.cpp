@@ -219,8 +219,11 @@ void UGraphSampleGraphSchema::GetGraphSampleNodeActions(FGraphActionMenuBuilder&
 	{
 		if (const UGraphSampleNode* FocusesGraphNode = FocusesClass->GetDefaultObject<UGraphSampleNode>())
 		{
-			const TSharedPtr<FGraphSampleGraphSchemaAction_NewNode> NewNodeAction(new FGraphSampleGraphSchemaAction_NewNode(FocusesGraphNode));
-			ActionMenuBuilder.AddAction(NewNodeAction);
+			if (CategoryName.IsEmpty() || CategoryName.Equals(FocusesGraphNode->GetNodeCategory()))
+			{
+				const TSharedPtr<FGraphSampleGraphSchemaAction_NewNode> NewNodeAction(new FGraphSampleGraphSchemaAction_NewNode(FocusesGraphNode));
+				ActionMenuBuilder.AddAction(NewNodeAction);
+			}
 		}
 	}
 
