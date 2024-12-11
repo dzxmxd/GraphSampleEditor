@@ -36,11 +36,7 @@ struct GRAPHSAMPLEEDITOR_API FGraphSampleGraphSchemaAction_NewNode : public FEdG
 
 	explicit FGraphSampleGraphSchemaAction_NewNode(const UGraphSampleNode* InNodeTemplate)
 		: FEdGraphSchemaAction(FText::FromString(InNodeTemplate->GetNodeCategory()), InNodeTemplate->GetNodeTitle(), InNodeTemplate->GetNodeToolTip(), 0, FText::GetEmpty())
-		, NodeClass(InNodeTemplate->GetClass())
-	{
-		// Default using title to search
-		// SearchText = NodeTemplate->GetNodeTitle().ToString() + NodeTemplate->GetNodeToolTip().ToString();
-	}
+		, NodeClass(InNodeTemplate->GetClass()) {}
 
 	// FEdGraphSchemaAction
 	virtual UEdGraphNode* PerformAction(class UEdGraph* ParentGraph, UEdGraphPin* FromPin, const FVector2D Location, bool bSelectNewNode = true) override;
